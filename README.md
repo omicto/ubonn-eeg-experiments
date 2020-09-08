@@ -37,3 +37,8 @@ data
 ├ S
 └ Z
 ```
+
+# Referencias & Credito
+- Hussein, R., et al. (2018) _Optimized deep neural network architecture for robust detection of epileptic seizures using EEG signals_  https://doi.org/10.1016/j.clinph.2018.10.010
+- [Andrzejak RG, Lehnertz K, Rieke C, Mormann F, David P, Elger CE (2001) Indications of nonlinear deterministic and finite dimensional structures in time series of brain electrical activity: Dependence on recording region and brain state, Phys. Rev. E, 64, 061907](http://epileptologie-bonn.de/cms/front_content.php?idcat=193&lang=3)
+- Some code taken from: https://github.com/ramyh/Epileptic-Seizure-Detection
