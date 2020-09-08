@@ -14,8 +14,9 @@ def read_file(file_path):#, timesteps, data_dim, data_length):
     with open(file_path) as f:
         return parse_file(f)
 
+# Intended for use when training a ML Model
 # https://stackoverflow.com/a/4602224/11449725
-def unison_shuffled_copies(a, b):
+def unison_shuffled_copies(a, b): 
     assert len(a) == len(b)
     p = np.random.permutation(len(a))
     return a[p], b[p]
@@ -28,23 +29,17 @@ classes = {
     "SEIZURE"      :  2
 }
 
-# TODO
 sets = {
+    """
+    Mapping between the letters used to describe each 'subdataset'
+    per http://epileptologie-bonn.de/cms/front_content.php?idcat=193&lang=3
+    """
     "A": {"class": classes["HEALTHY"],      "letter": "Z"},
     "B": {"class": classes["HEALTHY"],      "letter": "O"},
     "C": {"class": classes["SEIZURE_FREE"], "letter": "N"},
     "D": {"class": classes["SEIZURE_FREE"], "letter": "F"},
     "E": {"class": classes["SEIZURE"],      "letter": "S"}
 }
-
-# ubonn = {
-#     "healthy" : [
-#         {"signal": [],
-#          "letter": "Z",
-#           "type" : "original",
-#            "id"  : 1}
-#            ]
-#     }
 
 signaltypes = {
     "MUSC" : "muscles",
@@ -73,8 +68,25 @@ def get_filetype(filename):
     else: 
         return "original"
 
-# TODO
-def load_ubonn_dict():
+def load_ubonn_dict(verbose=False):
+    """
+    Loads the entirety of the UBonn dataset in a dict that
+    has the following general structure:
+
+    ubonn = {
+    0 : {"signals": 
+            [{  "signal": [],
+                "letter": "Z",
+                "type" : "original", # Whether the signal is original or contains artifacts
+                "id"  : 1}
+           ]},
+        "type": "healthy"           # Category
+        }
+    }
+
+    Keyword arguments:
+    verbose -- display debug info while reading (default False)
+    """
     ubonn = {
         0 : {"signals": [], "type" : "healthy" },
         1 : {"signals": [], "type" : "seizure_free" },
@@ -88,7 +100,8 @@ def load_ubonn_dict():
         clazz = dset["class"]
         directory = f'{base_path}/{letter}'
         for filename in os.listdir(directory):
-            print(f"Read {filename}")
+            if verbose:
+                print(f"Read {filename}")
             signal = read_file(os.path.join(directory, filename))
             filetype = get_filetype(filename)
             signal_id = get_signalid(filename)
@@ -97,17 +110,19 @@ def load_ubonn_dict():
     
     return ubonn
 
-# TODO
-def load_ubonn():
-    '''
-        Returns
-         data   -   ndarray containing the raw signals
-         labels -   ndarray containing the labels, using the following mapping
+def load_ubonn(verbose=False):
+    """
+    Loads the entirety of the UBonn dataset in a format fit for 
+    training a Machine Learning model
+
+    Returns
+        data   --   ndarray containing the raw signals
+        labels --   ndarray containing the labels, using the following mapping
                     "HEALTHY"      :  0,
                     "SEIZURE_FREE" :  1,
                     "SEIZURE"      :  2
-    '''
-    return dataset_to_array(load_ubonn_dict())
+    """
+    return dataset_to_array(load_ubonn_dict(verbose))
 
 def dataset_to_array(dset):
     data = []

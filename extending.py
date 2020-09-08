@@ -14,7 +14,7 @@ def save_signal(signal, path, identifier=""):
     with open(path,'w+') as f:
         write_signal_to_file(f, signal)
 
-def extend_ubonn():
+def extend_ubonn(verbose=False):
     base_path = "data"
     data = []
     labels = []
@@ -32,7 +32,8 @@ def extend_ubonn():
             w = np.floor(white_noise(signal))
             save_signal(w, f'{directory}/{letter}-WHIT{Id}')
             count += 1
-            print(f'Extended file {filename}')
+            if verbose:
+                print(f'Extended file {filename}')
 
 if __name__ == "__main__":
     extend_ubonn()
