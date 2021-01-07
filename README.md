@@ -3,6 +3,8 @@
 The goal of this project is to reproduce the results presented in _[Hussein, R., et al. (2018)](https://doi.org/10.1016/j.clinph.2018.10.010)_.
 * `reading.py` contains functions to load the Ubonn Dataset which must be downloaded prior to running the project.
 * `preprocessing.py` includes some functions to perform data augmentation. This is done in `extending.py`.
+
+
 This project was done as part of what would be my thesis project, rest of the intructions is in spanish below because of that.
 
 ----
